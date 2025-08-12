@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(210, 25%, 7.8431%);
+  --card: hsl(180, 6.6667%, 97.0588%);
+  --card-foreground: hsl(210, 25%, 7.8431%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(210, 25%, 7.8431%);
+  --primary: hsl(330, 45%, 75%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(330, 30%, 95%);
+  --secondary-foreground: hsl(240, 10%, 25%);
+  --muted: hsl(330, 20%, 96%);
+  --muted-foreground: hsl(240, 5%, 50%);
+  --accent: hsl(330, 50%, 85%);
+  --accent-foreground: hsl(240, 10%, 25%);
+  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(201.4286, 30.4348%, 90.9804%);
+  --input: hsl(200, 23.0769%, 97.4510%);
+  --ring: hsl(330, 45%, 75%);
+  
+  /* Khaista Brand Colors - Light Pink & White Theme */
+  --khaista-pink: hsl(330, 45%, 75%);
+  --khaista-light-pink: hsl(330, 50%, 90%);
+  --khaista-soft-pink: hsl(330, 30%, 95%);
+  --khaista-white: hsl(0, 0%, 100%);
+  --khaista-cream: hsl(30, 20%, 98%);
+  --khaista-gray: hsl(240, 5%, 50%);
+  --khaista-charcoal: hsl(240, 10%, 25%);
+  
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: Menlo, monospace;
+  --radius: 1.3rem;
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(200, 6.6667%, 91.1765%);
+  --card: hsl(228, 9.8039%, 10%);
+  --card-foreground: hsl(0, 0%, 85.0980%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(200, 6.6667%, 91.1765%);
+  --primary: hsl(172, 85%, 23%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(195, 15.3846%, 94.9020%);
+  --secondary-foreground: hsl(210, 25%, 7.8431%);
+  --muted: hsl(0, 0%, 9.4118%);
+  --muted-foreground: hsl(210, 3.3898%, 46.2745%);
+  --accent: hsl(45, 93%, 47%);
+  --accent-foreground: hsl(210, 25%, 7.8431%);
+  --destructive: hsl(356.3033, 90.5579%, 54.3137%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(210, 5.2632%, 14.9020%);
+  --input: hsl(207.6923, 27.6596%, 18.4314%);
+  --ring: hsl(330, 45%, 75%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  .text-khaista-pink {
+    color: var(--khaista-pink);
+  }
+  
+  .text-khaista-light-pink {
+    color: var(--khaista-light-pink);
+  }
+  
+  .text-khaista-soft-pink {
+    color: var(--khaista-soft-pink);
+  }
+  
+  .text-khaista-gray {
+    color: var(--khaista-gray);
+  }
+  
+  .text-khaista-charcoal {
+    color: var(--khaista-charcoal);
+  }
+  
+  .bg-khaista-pink {
+    background-color: var(--khaista-pink);
+  }
+  
+  .bg-khaista-light-pink {
+    background-color: var(--khaista-light-pink);
+  }
+  
+  .bg-khaista-soft-pink {
+    background-color: var(--khaista-soft-pink);
+  }
+  
+  .bg-khaista-white {
+    background-color: var(--khaista-white);
+  }
+  
+  .bg-khaista-cream {
+    background-color: var(--khaista-cream);
+  }
+  
+  .bg-khaista-charcoal {
+    background-color: var(--khaista-charcoal);
+  }
+  
+  .border-khaista-pink {
+    border-color: var(--khaista-pink);
+  }
+  
+  .hover\:bg-khaista-pink\/90:hover {
+    background-color: hsl(330, 45%, 75%, 0.9);
+  }
+}
