@@ -6,6 +6,9 @@ import ProductCard from "@/components/product-card";
 import NewsletterSignup from "@/components/newsletter-signup";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@shared/schema";
+import jewelryImage from "@assets/traad jewlery_1755024989288.webp";
+import clothingImage from "@assets/Traditional Afghan Clothing_1755024555984.jpg";
+import bagsImage from "@assets/Traditional Afghan bags_1755024555983.jpg";
 
 export default function Home() {
   const { data: featuredProducts, isLoading } = useQuery<Product[]>({
@@ -68,7 +71,7 @@ export default function Home() {
               <div className="group cursor-pointer transform hover:-translate-y-2 transition-all duration-300">
                 <div className="relative overflow-hidden rounded-xl shadow-lg">
                   <img 
-                    src="/assets/traad jewlery_1755024989288.webp" 
+                    src={jewelryImage} 
                     alt="Traditional Afghan Jewelry" 
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" 
                   />
@@ -87,7 +90,7 @@ export default function Home() {
               <div className="group cursor-pointer transform hover:-translate-y-2 transition-all duration-300">
                 <div className="relative overflow-hidden rounded-xl shadow-lg">
                   <img 
-                    src="/assets/Traditional Afghan Clothing_1755024555984.jpg" 
+                    src={clothingImage} 
                     alt="Traditional Afghan Dresses" 
                     className="w-full h-64 object-cover object-top group-hover:scale-105 transition-transform duration-300" 
                   />
@@ -106,7 +109,7 @@ export default function Home() {
               <div className="group cursor-pointer transform hover:-translate-y-2 transition-all duration-300">
                 <div className="relative overflow-hidden rounded-xl shadow-lg">
                   <img 
-                    src="/assets/Traditional Afghan bags_1755024555983.jpg" 
+                    src={bagsImage} 
                     alt="Traditional Afghan Bags" 
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" 
                   />
@@ -153,74 +156,44 @@ export default function Home() {
               ))}
             </div>
           )}
-
-          <div className="text-center mt-12">
-            <Link href="/products">
-              <Button className="bg-khaista-pink text-white px-8 py-3 hover:bg-khaista-pink/90">
-                View All Products
-              </Button>
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Mission Statement */}
-      <section className="py-16 bg-gradient-to-r from-khaista-pink to-khaista-light-pink">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-white">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6">
-              Empowering Afghan Women Through Craft
-            </h2>
-            <p className="text-xl mb-8 max-w-4xl mx-auto">
-              Every purchase supports Afghan women artisans, preserving centuries-old traditions while providing sustainable income for families. Together, we celebrate the rich cultural heritage of Afghanistan through authentic handmade craftsmanship.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-              <div className="text-center">
-                <div className="text-4xl font-bold mb-2">100+</div>
-                <p className="text-lg">Women Artisans Supported</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold mb-2">500+</div>
-                <p className="text-lg">Handcrafted Pieces</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold mb-2">25+</div>
-                <p className="text-lg">Countries Reached</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-16 bg-white">
+      {/* Customer Testimonials */}
+      <section className="py-16 bg-gradient-to-r from-khaista-light-pink to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-khaista-charcoal mb-4">
               What Our Customers Say
             </h2>
+            <p className="text-lg text-khaista-gray">Hear from women around the world who love our products</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-khaista-cream p-6 rounded-xl">
-                <div className="flex items-center mb-4">
-                  <div className="flex text-khaista-amber">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-current" />
-                    ))}
-                  </div>
+              <div key={index} className="bg-white p-6 rounded-xl shadow-lg">
+                <div className="flex mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  ))}
                 </div>
-                <p className="text-gray-700 mb-4 italic">"{testimonial.text}"</p>
-                <div className="font-semibold text-khaista-charcoal">{testimonial.author}</div>
-                <div className="text-sm text-gray-600">{testimonial.location}</div>
+                <p className="text-khaista-charcoal mb-4 italic">"{testimonial.text}"</p>
+                <div className="text-sm">
+                  <p className="font-semibold text-khaista-charcoal">{testimonial.author}</p>
+                  <p className="text-khaista-gray">{testimonial.location}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <NewsletterSignup />
+      {/* Newsletter */}
+      <section className="py-16 bg-gradient-to-r from-khaista-pink to-khaista-light-pink">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <NewsletterSignup />
+        </div>
+      </section>
     </div>
   );
 }
