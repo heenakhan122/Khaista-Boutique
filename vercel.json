@@ -1,20 +1,19 @@
 {
   "version": 2,
-  "functions": {
-    "server/index.ts": {
-      "runtime": "@vercel/node@3.0.7"
-    }
-  },
   "builds": [
     {
-      "src": "client/**",
-      "use": "@vercel/static-build",
+      "src": "package.json",
+      "use": "@vercel/node",
       "config": {
-        "buildCommand": "cd client && npm run build",
-        "outputDirectory": "dist"
+        "buildCommand": "vite build"
       }
     }
   ],
+  "functions": {
+    "server/index.ts": {
+      "runtime": "@vercel/node"
+    }
+  },
   "routes": [
     {
       "src": "/api/(.*)",
@@ -22,7 +21,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "client/dist/index.html"
+      "dest": "dist/public/index.html"
     }
   ]
 }
