@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "buildCommand": "vite build",
-        "outputDirectory": "dist/public"
-      }
-    }
-  ]
+  "framework": "vite",
+  "buildCommand": "vite build",
+  "outputDirectory": "dist/public",
+  "installCommand": "npm install",
+  "devCommand": "vite --host 0.0.0.0 --port $PORT"
 }
