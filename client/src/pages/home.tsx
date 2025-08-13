@@ -9,12 +9,10 @@ import type { Product } from "@shared/schema";
 import jewelryImage from "@assets/traad jewlery_1755024989288.webp";
 import clothingImage from "@assets/Traditional Afghan Clothing_1755024555984.jpg";
 import bagsImage from "@assets/Traditional Afghan bags_1755024555983.jpg";
-
 export default function Home() {
   const { data: featuredProducts, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products/featured"],
   });
-
   const testimonials = [
     {
       text: "The jewelry is absolutely stunning and the craftsmanship is incredible. I love knowing that my purchase supports Afghan women artisans.",
@@ -32,11 +30,9 @@ export default function Home() {
       location: "Toronto, Canada"
     }
   ];
-
   return (
     <div>
       <HeroSection />
-
       {/* AWC Partnership Banner */}
       <section className="py-8 bg-gradient-to-r from-amber-50 to-orange-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -52,7 +48,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Featured Categories */}
       <section className="py-16 bg-khaista-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -64,7 +59,6 @@ export default function Home() {
               Each piece tells a story of generations-old techniques passed down through Afghan artisan families
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Jewelry Category */}
             <Link href="/products/jewelry">
@@ -84,7 +78,6 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-
             {/* Dresses Category */}
             <Link href="/products/clothing">
               <div className="group cursor-pointer transform hover:-translate-y-2 transition-all duration-300">
@@ -103,7 +96,6 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-
             {/* Bags Category */}
             <Link href="/products/bags">
               <div className="group cursor-pointer transform hover:-translate-y-2 transition-all duration-300">
@@ -125,7 +117,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Featured Products */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -135,7 +126,6 @@ export default function Home() {
             </h2>
             <p className="text-lg text-khaista-gray">Discover our most cherished pieces</p>
           </div>
-
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[...Array(4)].map((_, i) => (
@@ -158,7 +148,6 @@ export default function Home() {
           )}
         </div>
       </section>
-
       {/* Customer Testimonials */}
       <section className="py-16 bg-gradient-to-r from-khaista-light-pink to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -168,7 +157,6 @@ export default function Home() {
             </h2>
             <p className="text-lg text-khaista-gray">Hear from women around the world who love our products</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-lg">
@@ -187,7 +175,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Newsletter */}
       <section className="py-16 bg-gradient-to-r from-khaista-pink to-khaista-light-pink">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
