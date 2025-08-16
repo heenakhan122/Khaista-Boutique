@@ -2,7 +2,7 @@ exports.handler = async (event, context) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Content-Type': 'application/json',
   };
 
@@ -11,7 +11,7 @@ exports.handler = async (event, context) => {
   }
 
   if (event.httpMethod === 'GET') {
-    const products = [
+    const featuredProducts = [
       {
         id: "1",
         name: "Afghan Choker Necklace",
@@ -31,15 +31,6 @@ exports.handler = async (event, context) => {
         featured: true
       },
       {
-        id: "3",
-        name: "Afghan Crescent Necklace", 
-        description: "Beautiful crescent moon design necklace with traditional craftsmanship",
-        price: 99.99,
-        category: "jewelry",
-        imageUrl: "/assets/Khaista%20Afghan%20Crescent%20Necklace_1754949895062.webp",
-        featured: false
-      },
-      {
         id: "4",
         name: "Green and Red Kochi Dress",
         description: "Traditional Kochi dress with vibrant green and red embroidery",
@@ -47,15 +38,6 @@ exports.handler = async (event, context) => {
         category: "clothing",
         imageUrl: "/assets/Khaista%20Green%20and%20Red%20Kochi%20Dress_1754949895065.jpg",
         featured: true
-      },
-      {
-        id: "5",
-        name: "Blue and Silver Kochi Dress",
-        description: "Elegant blue and silver traditional dress with intricate details",
-        price: 349.99,
-        category: "clothing",
-        imageUrl: "/assets/Khaista%20blue%20and%20silver%20kochi%20dress_1754949895064.jpg",
-        featured: false
       },
       {
         id: "6",
@@ -67,20 +49,11 @@ exports.handler = async (event, context) => {
         featured: true
       }
     ];
-
-    const { category } = event.queryStringParameters || {};
-    
-    let result;
-    if (category) {
-      result = products.filter(product => product.category === category);
-    } else {
-      result = products;
-    }
     
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(result),
+      body: JSON.stringify(featuredProducts),
     };
   }
 
