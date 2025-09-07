@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Mail, MapPin } from "lucide-react";
 import { SiInstagram, SiFacebook } from "react-icons/si";
-import khaistaBoutiqueLogo from "@assets/Khaista Boutique Logo_1754949895064.jpg";
+import khaistaBoutiqueLogo from "@assets/Khaista_Boutique_Logo_1754949895064.jpg";
 
 export default function Footer() {
   return (

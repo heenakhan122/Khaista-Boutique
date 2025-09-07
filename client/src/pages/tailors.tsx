@@ -130,7 +130,7 @@ export default function Tailors() {
           <div className="max-w-5xl mx-auto mt-12">
             <div className="relative overflow-hidden rounded-xl shadow-2xl">
               <img 
-                src="/assets/Khaista Tailors_1755027069016.jpg" 
+                src="/assets/Khaista_Tailors_1755027069016.jpg" 
                 alt="Khaista tailors workshop showing women working together on traditional Afghan garments with professional sewing equipment" 
                 className="w-full h-64 md:h-96 object-cover object-top"
               />
@@ -226,7 +226,7 @@ export default function Tailors() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div className="relative overflow-hidden rounded-xl shadow-lg group">
               <img 
-                src="/assets/Khaista Tailored dress 1_1755026603721.jpeg" 
+                src="/assets/Khaista_Tailored_dress_1_1755026603721.jpeg" 
                 alt="Custom tailored traditional Afghan dress with intricate white embroidery" 
                 className="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-300"
               />
@@ -242,7 +242,7 @@ export default function Tailors() {
 
             <div className="relative overflow-hidden rounded-xl shadow-lg group">
               <img 
-                src="/assets/tailored dress 2_1755026617597.webp" 
+                src="/assets/tailored_dress_2_1755026617597.webp" 
                 alt="Elegant traditional Afghan dress in white with colorful embroidered bodice and flowing skirt" 
                 className="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-300"
               />
@@ -258,7 +258,7 @@ export default function Tailors() {
 
             <div className="relative overflow-hidden rounded-xl shadow-lg group">
               <img 
-                src="/assets/number 3 couple_1755026811786.jpg" 
+                src="/assets/number_3_couple_1755026811786.jpg" 
                 alt="Couple wearing matching traditional Afghan outfits - red embroidered dress and men's vest with traditional patterns" 
                 className="w-full h-96 object-cover group-hover:scale-105 transition-transform duration-300"
               />

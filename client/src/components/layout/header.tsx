@@ -12,7 +12,7 @@ import {
 import { useCartStore } from "@/lib/cart-store";
 import { useWishlistStore } from "@/lib/wishlist-store";
 import { QuickSearch } from "@/components/quick-search";
-import khaistaBoutiqueLogo from "@assets/Khaista Boutique Logo_1754950449795.jpg";
+import khaistaBoutiqueLogo from "@assets/Khaista_Boutique_Logo_1754950449795.jpg";
 
 export default function Header() {
   const [location] = useLocation();
