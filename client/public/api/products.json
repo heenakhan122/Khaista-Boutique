@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "name": "Afghan Choker Necklace",
+    "description": "Traditional handcrafted choker necklace with intricate Afghan design",
+    "price": 89.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista%20Afghan%20Choker%20Necklace_1754949895057.jpg",
+    "featured": true
+  },
+  {
+    "id": "2",
+    "name": "Afghan Coin Necklace",
+    "description": "Authentic Afghan coin necklace with traditional metalwork",
+    "price": 129.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista%20Afghan%20Coin%20Necklace_1754949895058.webp",
+    "featured": true
+  },
+  {
+    "id": "3",
+    "name": "Afghan Crescent Necklace",
+    "description": "Beautiful crescent moon design necklace with traditional craftsmanship",
+    "price": 99.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista%20Afghan%20Crescent%20Necklace_1754949895062.webp",
+    "featured": false
+  },
+  {
+    "id": "4",
+    "name": "Green and Red Kochi Dress",
+    "description": "Traditional Kochi dress with vibrant green and red embroidery",
+    "price": 299.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista%20Green%20and%20Red%20Kochi%20Dress_1754949895065.jpg",
+    "featured": true
+  },
+  {
+    "id": "5",
+    "name": "Blue and Silver Kochi Dress",
+    "description": "Elegant blue and silver traditional dress with intricate details",
+    "price": 349.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista%20blue%20and%20silver%20kochi%20dress_1754949895064.jpg",
+    "featured": false
+  },
+  {
+    "id": "6",
+    "name": "Afghan Vintage Pashtun Bag",
+    "description": "Authentic vintage Pashtun bag with traditional patterns",
+    "price": 179.99,
+    "category": "bags",
+    "imageUrl": "assets/Khaista%20Afghan%20vintage%20pashtun%20bag_1754949895064.webp",
+    "featured": true
+  }
+]

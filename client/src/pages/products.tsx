@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ProductCard from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,15 +8,38 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@shared/schema";
 
+// ---- helpers: prefix any public-path with the site base (GitHub Pages subpath) ----
+const BASE = import.meta.env.BASE_URL; // e.g., "/Khaista-Boutique/"
+const withBase = (p?: string) =>
+  !p ? p : /^https?:\/\//i.test(p) ? p : BASE + p.replace(/^\/+/, "");
+
+// Load once from a static file at client/public/api/products.json
+async function fetchAllProducts(): Promise<Product[]> {
+  const res = await fetch(withBase("api/products.json")!);
+  if (!res.ok) throw new Error(`Failed to load products.json (${res.status})`);
+  const data = (await res.json()) as Product[];
+  // Normalize image fields so ProductCard can use either .image or .imageUrl
+  return data.map((p: any) => {
+    const img = withBase(p.image ?? p.imageUrl);
+    return { ...p, image: img, imageUrl: img } as Product & { image?: string; imageUrl?: string };
+  });
+}
+
 export default function Products() {
   const [, params] = useRoute("/products/:category");
   const [selectedCategory, setSelectedCategory] = useState<string>(params?.category || "all");
 
-  const { data: products, isLoading } = useQuery<Product[]>({
-    queryKey: selectedCategory === "all" 
-      ? ["/api/products"] 
-      : ["/api/products/category", selectedCategory],
+  const { data: allProducts = [], isLoading } = useQuery<Product[]>({
+    queryKey: ["products"],
+    queryFn: fetchAllProducts,
   });
+
+  const products = useMemo(() => {
+    if (selectedCategory === "all") return allProducts;
+    return allProducts.filter(
+      (p: any) => p.category?.toLowerCase() === selectedCategory
+    );
+  }, [allProducts, selectedCategory]);
 
   const categories = [
     { value: "all", label: "All Products" },
@@ -28,23 +51,24 @@ export default function Products() {
   const categoryInfo = {
     all: {
       title: "All Products",
-      description: "Discover our complete collection of authentic Afghan handcrafted items"
+      description: "Discover our complete collection of authentic Afghan handcrafted items",
     },
     jewelry: {
       title: "Traditional Jewelry",
-      description: "Exquisite handcrafted jewelry featuring traditional Afghan designs with silver work and natural stones"
+      description: "Exquisite handcrafted jewelry featuring traditional Afghan designs with silver work and natural stones",
     },
     dresses: {
       title: "Traditional Dresses",
-      description: "Stunning Kochi and Pashtun dresses with intricate embroidery and authentic patterns"
+      description: "Stunning Kochi and Pashtun dresses with intricate embroidery and authentic patterns",
     },
     bags: {
       title: "Handwoven Bags",
-      description: "Colorful traditional bags featuring vintage patterns and vibrant embroidered designs"
-    }
+      description: "Colorful traditional bags featuring vintage patterns and vibrant embroidered designs",
+    },
   };
 
-  const currentInfo = categoryInfo[selectedCategory as keyof typeof categoryInfo] || categoryInfo.all;
+  const currentInfo =
+    categoryInfo[selectedCategory as keyof typeof categoryInfo] || categoryInfo.all;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -76,8 +100,8 @@ export default function Products() {
                     key={category.value}
                     variant="ghost"
                     className={`w-full justify-start transition-all rounded-lg ${
-                      selectedCategory === category.value 
-                        ? "bg-khaista-light-pink text-khaista-pink font-semibold" 
+                      selectedCategory === category.value
+                        ? "bg-khaista-light-pink text-khaista-pink font-semibold"
                         : "text-khaista-charcoal hover:bg-khaista-pink hover:text-white"
                     }`}
                     onClick={() => setSelectedCategory(category.value)}
@@ -110,8 +134,8 @@ export default function Products() {
                   key={category.value}
                   variant="secondary"
                   className={`cursor-pointer transition-all rounded-lg ${
-                    selectedCategory === category.value 
-                      ? "bg-khaista-light-pink text-khaista-pink font-semibold" 
+                    selectedCategory === category.value
+                      ? "bg-khaista-light-pink text-khaista-pink font-semibold"
                       : "text-khaista-charcoal hover:bg-khaista-pink hover:text-white"
                   }`}
                   onClick={() => setSelectedCategory(category.value)}
@@ -143,9 +167,7 @@ export default function Products() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <div className="text-gray-500 text-lg">
-                  No products found in this category.
-                </div>
+                <div className="text-gray-500 text-lg">No products found in this category.</div>
               </div>
             )}
           </main>
