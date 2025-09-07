@@ -5,8 +5,8 @@ import "./index.css";
 
 import { Router } from "wouter";
 
-// Vite fills this from vite.config.ts `base` → "/Khaista-Boutique/"
-const BASENAME = import.meta.env.BASE_URL;
+// Vite injects this from vite.config.ts
+const BASENAME = import.meta.env.BASE_URL; // "/Khaista-Boutique/"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
