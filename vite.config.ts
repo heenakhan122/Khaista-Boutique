@@ -4,7 +4,7 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 // ⬇️ set this to "/<repo>/" for a project site, or "/" for a user root site
-const BASE = "/khaista-boutique-export/";
+const BASE = "/Khaista-Boutique/";
 
 export default defineConfig({
   base: BASE, // ← add this line
