@@ -8,18 +8,17 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@shared/schema";
 
-// ---- helpers: prefix any public-path with the site base (GitHub Pages subpath) ----
-const BASE = import.meta.env.BASE_URL; // e.g., "/Khaista-Boutique/"
+const BASE = import.meta.env.BASE_URL; // e.g. "/Khaista-Boutique/"
 const withBase = (p?: string) =>
-  !p ? p : /^https?:\/\//i.test(p) ? p : BASE + p.replace(/^\/+/, "");
+  !p ? p : /^https?:\/\//i.test(p) || p.startsWith("/") ? p : BASE + p.replace(/^\/+/, "");
 
-// Load once from a static file at client/public/api/products.json
 async function fetchAllProducts(): Promise<Product[]> {
-  const res = await fetch(withBase("api/products.json")!);
+  // ✅ static file under client/public/api/products.json
+  const res = await fetch(BASE + "api/products.json");
   if (!res.ok) throw new Error(`Failed to load products.json (${res.status})`);
-  const data = (await res.json()) as Product[];
-  // Normalize image fields so ProductCard can use either .image or .imageUrl
-  return data.map((p: any) => {
+  const data = (await res.json()) as any[];
+  // normalize image fields so ProductCard can use either image or imageUrl
+  return data.map((p) => {
     const img = withBase(p.image ?? p.imageUrl);
     return { ...p, image: img, imageUrl: img } as Product & { image?: string; imageUrl?: string };
   });
@@ -30,7 +29,7 @@ export default function Products() {
   const [selectedCategory, setSelectedCategory] = useState<string>(params?.category || "all");
 
   const { data: allProducts = [], isLoading } = useQuery<Product[]>({
-    queryKey: ["products"],
+    queryKey: ["products"],       // one request; filter client-side
     queryFn: fetchAllProducts,
   });
 
@@ -51,38 +50,35 @@ export default function Products() {
   const categoryInfo = {
     all: {
       title: "All Products",
-      description: "Discover our complete collection of authentic Afghan handcrafted items",
+      description: "Discover our complete collection of authentic Afghan handcrafted items"
     },
     jewelry: {
       title: "Traditional Jewelry",
-      description: "Exquisite handcrafted jewelry featuring traditional Afghan designs with silver work and natural stones",
+      description: "Exquisite handcrafted jewelry featuring traditional Afghan designs with silver work and natural stones"
     },
     dresses: {
       title: "Traditional Dresses",
-      description: "Stunning Kochi and Pashtun dresses with intricate embroidery and authentic patterns",
+      description: "Stunning Kochi and Pashtun dresses with intricate embroidery and authentic patterns"
     },
     bags: {
       title: "Handwoven Bags",
-      description: "Colorful traditional bags featuring vintage patterns and vibrant embroidered designs",
-    },
-  };
+      description: "Colorful traditional bags featuring vintage patterns and vibrant embroidered designs"
+    }
+  } as const;
 
-  const currentInfo =
-    categoryInfo[selectedCategory as keyof typeof categoryInfo] || categoryInfo.all;
+  const currentInfo = categoryInfo[(selectedCategory as keyof typeof categoryInfo) || "all"];
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="bg-khaista-cream py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold text-khaista-charcoal mb-4">
-              {currentInfo.title}
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              {currentInfo.description}
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-khaista-charcoal mb-4">
+            {currentInfo.title}
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            {currentInfo.description}
+          </p>
         </div>
       </section>
 
@@ -99,7 +95,7 @@ export default function Products() {
                   <Button
                     key={category.value}
                     variant="ghost"
-                    className={`w-full justify-start transition-all rounded-lg ${
+                    className={`w-full justify-start rounded-lg transition-all ${
                       selectedCategory === category.value
                         ? "bg-khaista-light-pink text-khaista-pink font-semibold"
                         : "text-khaista-charcoal hover:bg-khaista-pink hover:text-white"
@@ -112,28 +108,25 @@ export default function Products() {
               </CardContent>
             </Card>
 
-            {/* Product Count */}
+            {/* Count */}
             <Card className="mt-4">
-              <CardContent className="pt-6">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-khaista-turquoise">
-                    {products?.length || 0}
-                  </div>
-                  <div className="text-sm text-gray-600">Products Found</div>
+              <CardContent className="pt-6 text-center">
+                <div className="text-2xl font-bold text-khaista-turquoise">
+                  {products?.length || 0}
                 </div>
+                <div className="text-sm text-gray-600">Products Found</div>
               </CardContent>
             </Card>
           </aside>
 
-          {/* Main Content */}
+          {/* Grid */}
           <main className="flex-1">
-            {/* Filter Bar */}
             <div className="flex flex-wrap gap-2 mb-6">
               {categories.map((category) => (
                 <Badge
                   key={category.value}
                   variant="secondary"
-                  className={`cursor-pointer transition-all rounded-lg ${
+                  className={`cursor-pointer rounded-lg transition-all ${
                     selectedCategory === category.value
                       ? "bg-khaista-light-pink text-khaista-pink font-semibold"
                       : "text-khaista-charcoal hover:bg-khaista-pink hover:text-white"
@@ -145,10 +138,9 @@ export default function Products() {
               ))}
             </div>
 
-            {/* Products Grid */}
             {isLoading ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {[...Array(8)].map((_, i) => (
+                {Array.from({ length: 8 }).map((_, i) => (
                   <div key={i} className="space-y-4">
                     <Skeleton className="aspect-square rounded-lg" />
                     <div className="space-y-2">
@@ -166,8 +158,8 @@ export default function Products() {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12">
-                <div className="text-gray-500 text-lg">No products found in this category.</div>
+              <div className="text-center py-12 text-gray-500 text-lg">
+                No products found in this category.
               </div>
             )}
           </main>
