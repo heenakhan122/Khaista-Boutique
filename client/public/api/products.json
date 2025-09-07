@@ -5,7 +5,7 @@
     "description": "Traditional handcrafted choker necklace with intricate Afghan design",
     "price": 89.99,
     "category": "jewelry",
-    "imageUrl": "assets/Khaista%20Afghan%20Choker%20Necklace_1754949895057.jpg",
+    "imageUrl": "assets/Khaista_Afghan_Choker_Necklace_1754949895057.jpg",
     "featured": true
   },
   {
@@ -14,7 +14,7 @@
     "description": "Authentic Afghan coin necklace with traditional metalwork",
     "price": 129.99,
     "category": "jewelry",
-    "imageUrl": "assets/Khaista%20Afghan%20Coin%20Necklace_1754949895058.webp",
+    "imageUrl": "assets/Khaista_Afghan_Coin_Necklace_1754949895058.webp",
     "featured": true
   },
   {
@@ -23,7 +23,7 @@
     "description": "Beautiful crescent moon design necklace with traditional craftsmanship",
     "price": 99.99,
     "category": "jewelry",
-    "imageUrl": "assets/Khaista%20Afghan%20Crescent%20Necklace_1754949895062.webp",
+    "imageUrl": "assets/Khaista_Afghan_Crescent_Necklace_1754949895062.webp",
     "featured": false
   },
   {
@@ -32,7 +32,7 @@
     "description": "Traditional Kochi dress with vibrant green and red embroidery",
     "price": 299.99,
     "category": "clothing",
-    "imageUrl": "assets/Khaista%20Green%20and%20Red%20Kochi%20Dress_1754949895065.jpg",
+    "imageUrl": "assets/Khaista_Green_and_Red_Kochi_Dress_1754949895065.jpg",
     "featured": true
   },
   {
@@ -41,7 +41,7 @@
     "description": "Elegant blue and silver traditional dress with intricate details",
     "price": 349.99,
     "category": "clothing",
-    "imageUrl": "assets/Khaista%20blue%20and%20silver%20kochi%20dress_1754949895064.jpg",
+    "imageUrl": "assets/Khaista_blue_and_silver_kochi_dress_1754949895064.jpg",
     "featured": false
   },
   {
@@ -50,7 +50,7 @@
     "description": "Authentic vintage Pashtun bag with traditional patterns",
     "price": 179.99,
     "category": "bags",
-    "imageUrl": "assets/Khaista%20Afghan%20vintage%20pashtun%20bag_1754949895064.webp",
+    "imageUrl": "assets/Khaista_Afghan_vintage_pashtun_bag_1754949895064.webp",
     "featured": true
   }
 ]
