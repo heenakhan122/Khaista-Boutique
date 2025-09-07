@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 
-import backgroundImage from "@assets/background-website_1754950409732.jpeg";
+import backgroundImage from "@/assets/background-website_1754950409732.jpeg";
 
 export default function HeroSection() {
   return (

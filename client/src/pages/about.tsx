@@ -1,7 +1,7 @@
 import { Heart, Users, Globe, Award, Shield, Handshake, DollarSign, Sparkles } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import NewsletterSignup from "@/components/newsletter-signup";
-import tailorsImage from "@assets/Tailors_Khaista_x_AWC_1755026272921.jpg";
+import tailorsImage from "@/assets/Tailors_Khaista_x_AWC_1755026272921.jpg";
 
 export default function About() {
   const impactValues = [
