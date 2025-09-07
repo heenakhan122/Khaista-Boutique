@@ -7,7 +7,7 @@ import NewsletterSignup from "@/components/newsletter-signup";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@shared/schema";
 import jewelryImage from "@/assets/traad_jewlery_1755024989288.webp";
-import clothingImage from "@/assets/Traditional_Afghan Clothing_1755024555984.jpg";
+import clothingImage from "@/assets/Traditional_Afghan_Clothing_1755024555984.jpg";
 import bagsImage from "@/assets/Traditional_Afghan_bags_1755024555983.jpg";
 export default function Home() {
   const { data: featuredProducts, isLoading } = useQuery<Product[]>({
