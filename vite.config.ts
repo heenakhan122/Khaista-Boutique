@@ -1,39 +1,52 @@
+// vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { fileURLToPath } from "url";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
-// ⬇️ set this to "/<repo>/" for a project site, or "/" for a user root site
+// --- Paths (ESM-safe dirname) ---
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// --- IMPORTANT: GitHub Pages project-site subpath ---
+// If you later deploy to a custom domain or root, change this to "/".
+// For GitHub Pages *project* site, it must match the repo name exactly (case-sensitive).
 const BASE = "/Khaista-Boutique/";
 
-export default defineConfig({
-  base: BASE, // ← add this line
-  plugins: [
-    react(),
-    runtimeErrorOverlay(),
-    ...(process.env.NODE_ENV !== "production" &&
-    process.env.REPL_ID !== undefined
+export default defineConfig(async () => {
+  // (Optional) Dev-only Replit cartographer plugin
+  const devPlugins =
+    process.env.NODE_ENV !== "production" && process.env.REPL_ID
       ? [
-          // (optional dev-only) this is fine to keep
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer(),
-          ),
+          (await import("@replit/vite-plugin-cartographer")).cartographer(),
         ]
-      : []),
-  ],
-  resolve: {
-  alias: {
-    "@": path.resolve(import.meta.dirname, "client", "src"),
-    "@shared": path.resolve(import.meta.dirname, "shared"),
-  },
-  },
-  root: path.resolve(import.meta.dirname, "client"),
-  build: {
-    // This will put the final site in dist/public (good—just match it in the workflow)
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
-    emptyOutDir: true,
-  },
-  server: {
-    fs: { strict: true, deny: ["**/.*"] },
-  },
+      : [];
+
+  return {
+    base: BASE,
+    plugins: [react(), runtimeErrorOverlay(), ...devPlugins],
+
+    // Your app source lives in client/
+    root: path.resolve(__dirname, "client"),
+
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "client", "src"),
+        "@shared": path.resolve(__dirname, "shared"),
+      },
+    },
+
+    build: {
+      // Output to dist/public (what you upload/deploy)
+      outDir: path.resolve(__dirname, "dist/public"),
+      emptyOutDir: true,
+      // (Keep default assetsDir = "assets" so URLs become /Khaista-Boutique/assets/...)
+      // assetsDir: "assets",
+    },
+
+    server: {
+      fs: { strict: true, deny: ["**/.*"] },
+    },
+  };
 });
