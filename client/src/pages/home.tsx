@@ -8,20 +8,19 @@ import NewsletterSignup from "@/components/newsletter-signup";
 import { Button } from "@/components/ui/button";
 import type { Product } from "@shared/schema";
 
-/* ---------- helpers ---------- */
+// Use BASE only for fetch() calls
 const BASE = import.meta.env.BASE_URL; // e.g. "/Khaista-Boutique/"
-const withBase = (p: string) =>
-  /^https?:\/\//i.test(p) || p.startsWith("/") ? p : BASE + p.replace(/^\/+/, "");
 
-// Category tile images live in client/public/assets/<file>
-const jewelryImage   = withBase("assets/traad_jewlery_1755024989288.webp");
-const clothingImage  = withBase("assets/Traditional_Afghan_Clothing_1755024555984.jpg");
-const bagsImage      = withBase("assets/Traditional_Afghan_bags_1755024555983.jpg");
+// Import images so Vite rewrites URLs correctly under subpath
+import jewelryImage from "@/assets/traad_jewlery_1755024989288.webp";
+import clothingImage from "@/assets/Traditional_Afghan_Clothing_1755024555984.jpg";
+import bagsImage from "@/assets/Traditional_Afghan_bags_1755024555983.jpg";
 
 // Load + normalize all products from static JSON
 async function fetchAllProducts(): Promise<ProductForCard[]> {
   const res = await fetch(BASE + "api/products.json");
   if (!res.ok) throw new Error(`Failed to load products.json (${res.status})`);
+
   const data = (await res.json()) as (Product & {
     image?: string;
     imageUrl?: string;
@@ -29,9 +28,17 @@ async function fetchAllProducts(): Promise<ProductForCard[]> {
   })[];
 
   return data.map((p) => {
-    const src = p.image ?? p.imageUrl!;
-    const img = withBase(src);
-    return { ...p, image: img, imageUrl: img, imageAlt: p.imageAlt ?? undefined };
+    // If product JSON has "image" or "imageUrl" that are relative strings,
+    // prefix with BASE so they resolve on GH Pages:
+    const src = p.image ?? p.imageUrl ?? "";
+    const prefixed =
+      /^https?:\/\//i.test(src) ? src : BASE + src.replace(/^\/+/, "");
+    return {
+      ...p,
+      image: prefixed,
+      imageUrl: prefixed,
+      imageAlt: p.imageAlt ?? undefined,
+    };
   });
 }
 
@@ -46,30 +53,15 @@ async function fetchFeatured(): Promise<ProductForCard[]> {
 }
 
 export default function Home() {
-  const { data: featuredProducts = [], isLoading } = useQuery({
+  const { data: featuredProducts = [], isLoading, error } = useQuery({
     queryKey: ["featured-products"],
     queryFn: fetchFeatured,
   });
 
   const testimonials = [
-    {
-      text:
-        "The jewelry is absolutely stunning and the craftsmanship is incredible. I love knowing that my purchase supports Afghan women artisans.",
-      author: "Sarah M.",
-      location: "New York, USA",
-    },
-    {
-      text:
-        "My traditional dress is gorgeous and fits perfectly. The attention to detail is remarkable. Highly recommend!",
-      author: "Amina K.",
-      location: "London, UK",
-    },
-    {
-      text:
-        "Beautiful products with meaningful stories. Fast shipping and excellent customer service. Will definitely order again!",
-      author: "Maria G.",
-      location: "Toronto, Canada",
-    },
+    { text: "The jewelry is absolutely stunning and the craftsmanship is incredible. I love knowing that my purchase supports Afghan women artisans.", author: "Sarah M.", location: "New York, USA" },
+    { text: "My traditional dress is gorgeous and fits perfectly. The attention to detail is remarkable. Highly recommend!", author: "Amina K.", location: "London, UK" },
+    { text: "Beautiful products with meaningful stories. Fast shipping and excellent customer service. Will definitely order again!", author: "Maria G.", location: "Toronto, Canada" },
   ];
 
   return (
@@ -177,6 +169,12 @@ export default function Home() {
             <p className="text-lg text-khaista-gray">Discover our most cherished pieces</p>
           </div>
 
+          {error && (
+            <p className="text-center text-red-600 mb-8">
+              Couldn’t load featured products. Please try again later.
+            </p>
+          )}
+
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {Array.from({ length: 4 }).map((_, i) => (
@@ -211,17 +209,17 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t, i) => (
+            {[0,1,2].map((i) => (
               <div key={i} className="bg-white p-6 rounded-xl shadow-lg">
                 <div className="flex mb-4">
                   {Array.from({ length: 5 }).map((_, k) => (
                     <Star key={k} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <p className="text-khaista-charcoal mb-4 italic">"{t.text}"</p>
+                <p className="text-khaista-charcoal mb-4 italic">"{testimonials[i].text}"</p>
                 <div className="text-sm">
-                  <p className="font-semibold text-khaista-charcoal">{t.author}</p>
-                  <p className="text-khaista-gray">{t.location}</p>
+                  <p className="font-semibold text-khaista-charcoal">{testimonials[i].author}</p>
+                  <p className="text-khaista-gray">{testimonials[i].location}</p>
                 </div>
               </div>
             ))}

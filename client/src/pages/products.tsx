@@ -1,26 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { useMemo, useState } from "react";
-import ProductCard from "@/components/product-card";
+import ProductCard, { type ProductForCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@shared/schema";
 
-const BASE = import.meta.env.BASE_URL; // e.g. "/Khaista-Boutique/"
-const withBase = (p?: string) =>
-  !p ? p : /^https?:\/\//i.test(p) || p.startsWith("/") ? p : BASE + p.replace(/^\/+/, "");
+const BASE = import.meta.env.BASE_URL; // "/Khaista-Boutique/"
+const withBase = (p: string) =>
+  /^https?:\/\//i.test(p) || p.startsWith("/") ? p : BASE + p.replace(/^\/+/, "");
 
-async function fetchAllProducts(): Promise<Product[]> {
-  // ✅ static file under client/public/api/products.json
-  const res = await fetch(BASE + "api/products.json");
+async function fetchAllProducts(): Promise<ProductForCard[]> {
+  const res = await fetch(BASE + "api/products.json"); // static JSON
   if (!res.ok) throw new Error(`Failed to load products.json (${res.status})`);
-  const data = (await res.json()) as any[];
-  // normalize image fields so ProductCard can use either image or imageUrl
+  const data = (await res.json()) as (Product & {
+    image?: string;
+    imageUrl?: string;
+    imageAlt?: string | null;
+  })[];
+
   return data.map((p) => {
-    const img = withBase(p.image ?? p.imageUrl);
-    return { ...p, image: img, imageUrl: img } as Product & { image?: string; imageUrl?: string };
+    const src = p.image ?? p.imageUrl!;      // pick a source (JSON has imageUrl)
+    const img = withBase(src);
+    return {
+      ...p,
+      image: img,
+      imageUrl: img,                         // ensure REQUIRED string for ProductForCard
+      imageAlt: p.imageAlt ?? undefined,     // null -> undefined
+    } as ProductForCard;
   });
 }
 
@@ -28,16 +37,14 @@ export default function Products() {
   const [, params] = useRoute("/products/:category");
   const [selectedCategory, setSelectedCategory] = useState<string>(params?.category || "all");
 
-  const { data: allProducts = [], isLoading } = useQuery<Product[]>({
-    queryKey: ["products"],       // one request; filter client-side
+  const { data: allProducts = [], isLoading } = useQuery<ProductForCard[]>({
+    queryKey: ["products"],
     queryFn: fetchAllProducts,
   });
 
   const products = useMemo(() => {
     if (selectedCategory === "all") return allProducts;
-    return allProducts.filter(
-      (p: any) => p.category?.toLowerCase() === selectedCategory
-    );
+    return allProducts.filter((p) => p.category?.toLowerCase() === selectedCategory);
   }, [allProducts, selectedCategory]);
 
   const categories = [
@@ -45,25 +52,28 @@ export default function Products() {
     { value: "jewelry", label: "Jewelry" },
     { value: "dresses", label: "Dresses" },
     { value: "bags", label: "Bags" },
-  ];
+  ] as const;
 
   const categoryInfo = {
     all: {
       title: "All Products",
-      description: "Discover our complete collection of authentic Afghan handcrafted items"
+      description: "Discover our complete collection of authentic Afghan handcrafted items",
     },
     jewelry: {
       title: "Traditional Jewelry",
-      description: "Exquisite handcrafted jewelry featuring traditional Afghan designs with silver work and natural stones"
+      description:
+        "Exquisite handcrafted jewelry featuring traditional Afghan designs with silver work and natural stones",
     },
     dresses: {
       title: "Traditional Dresses",
-      description: "Stunning Kochi and Pashtun dresses with intricate embroidery and authentic patterns"
+      description:
+        "Stunning Kochi and Pashtun dresses with intricate embroidery and authentic patterns",
     },
     bags: {
       title: "Handwoven Bags",
-      description: "Colorful traditional bags featuring vintage patterns and vibrant embroidered designs"
-    }
+      description:
+        "Colorful traditional bags featuring vintage patterns and vibrant embroidered designs",
+    },
   } as const;
 
   const currentInfo = categoryInfo[(selectedCategory as keyof typeof categoryInfo) || "all"];
@@ -76,9 +86,7 @@ export default function Products() {
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-khaista-charcoal mb-4">
             {currentInfo.title}
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {currentInfo.description}
-          </p>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">{currentInfo.description}</p>
         </div>
       </section>
 
@@ -111,9 +119,7 @@ export default function Products() {
             {/* Count */}
             <Card className="mt-4">
               <CardContent className="pt-6 text-center">
-                <div className="text-2xl font-bold text-khaista-turquoise">
-                  {products?.length || 0}
-                </div>
+                <div className="text-2xl font-bold text-khaista-turquoise">{products.length}</div>
                 <div className="text-sm text-gray-600">Products Found</div>
               </CardContent>
             </Card>
@@ -151,16 +157,14 @@ export default function Products() {
                   </div>
                 ))}
               </div>
-            ) : products && products.length > 0 ? (
+            ) : products.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {products.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             ) : (
-              <div className="text-center py-12 text-gray-500 text-lg">
-                No products found in this category.
-              </div>
+              <div className="text-center py-12 text-gray-500 text-lg">No products found.</div>
             )}
           </main>
         </div>

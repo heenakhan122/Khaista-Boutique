@@ -1,14 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-
-// BASE-aware helper so images work on GitHub Pages project sites
-const BASE = import.meta.env.BASE_URL; // e.g. "/Khaista-Boutique/"
-const withBase = (p: string) =>
-  /^https?:\/\//i.test(p) || p.startsWith("/")
-    ? BASE + p.replace(/^\/+/, "")
-    : BASE + p;
-
-const backgroundImage = withBase("assets/background-website_1754950409732.jpeg");
+import bgUrl from "@/assets/background-website_1754950409732.jpeg"; // <-- import handles GH Pages subpath
 
 export default function HeroSection() {
   return (
@@ -16,9 +8,9 @@ export default function HeroSection() {
       {/* Background image with overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        style={{ backgroundImage: `url(${bgUrl})` }}
       >
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
@@ -30,7 +22,8 @@ export default function HeroSection() {
 
           <div className="bg-black/40 rounded-lg p-6 mb-8 max-w-4xl mx-auto backdrop-blur-sm">
             <p className="text-xl md:text-2xl text-white font-medium leading-relaxed mb-3">
-              Supporting Afghan women artisans through the timeless beauty of traditional handmade jewelry, dresses, and accessories
+              Supporting Afghan women artisans through the timeless beauty of traditional handmade
+              jewelry, dresses, and accessories
             </p>
             <p className="text-lg text-khaista-cream font-medium">
               Partnering with the Afghanistan Women's Council for financial independence

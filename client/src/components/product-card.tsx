@@ -9,9 +9,9 @@ import type { Product } from "@shared/schema";
 
 /** Looser shape the card can accept from pages */
 export type ProductForCard = Omit<Product, "imageAlt"> & {
-  imageUrl: string;                       // keep required
-  image?: string;                         // optional alias
-  imageAlt?: string | null | undefined;   // may be undefined from JSON join
+  imageUrl: string;
+  image?: string;
+  imageAlt?: string | null | undefined;
 };
 
 interface ProductCardProps {
@@ -19,22 +19,27 @@ interface ProductCardProps {
 }
 
 const BASE = import.meta.env.BASE_URL;
-const toSrc = (p?: string) =>
-  !p ? undefined : /^https?:\/\//i.test(p) || p.startsWith("/") ? p : BASE + p.replace(/^\/+/, "");
+
+// FIX: always prefix BASE for non-HTTP paths, including those starting with "/"
+const toSrc = (p?: string) => {
+  if (!p) return undefined;
+  if (/^https?:\/\//i.test(p)) return p;                  // absolute URL
+  return BASE + p.replace(/^\/+/, "");                    // relative or "/..." -> BASE + path
+};
 
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
 
-  // Normalize to a strict Product for consumers that require it (imageAlt must NOT be undefined)
+  // Normalize to a strict Product
   const canonical: Product = {
     ...(product as unknown as Product),
-    imageUrl: product.image ?? product.imageUrl,   // ensure a string
-    imageAlt: product.imageAlt ?? null,            // undefined -> null
+    imageUrl: product.image ?? product.imageUrl,
+    imageAlt: product.imageAlt ?? null,
   };
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
-    e.stopPropagation();
+    e.stopPropagation(); // don't navigate when clicking the add button
     addItem(canonical);
   };
 
