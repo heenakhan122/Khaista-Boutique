@@ -1,10 +1,5 @@
-import { Switch, Route } from "wouter";  // <-- remove Router here
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-
-import Header from "@/components/layout/header";
-import Footer from "@/components/layout/footer";
+import React from "react";
+import { Route, Switch } from "wouter";
 
 import Home from "@/pages/home";
 import WhatsNew from "@/pages/whats-new";
@@ -23,7 +18,11 @@ import About from "@/pages/about";
 import ArtisanSpotlight from "@/pages/artisan-spotlight";
 import ReturnPolicy from "@/pages/return-policy";
 import NotFound from "@/pages/not-found";
-
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 import { queryClient } from "./lib/queryClient";
 
 export default function App() {
@@ -41,7 +40,13 @@ export default function App() {
               <Route path="/products/jewelry" component={ProductsJewelry} />
               <Route path="/products/bags" component={ProductsBags} />
               <Route path="/products/clothing" component={ProductsClothing} />
+
+              {/* ✅ Allow both /product/:id and /products/:id, with/without trailing slash */}
               <Route path="/product/:id" component={ProductDetail} />
+              <Route path="/product/:id/" component={ProductDetail} />
+              <Route path="/products/:id" component={ProductDetail} />
+              <Route path="/products/:id/" component={ProductDetail} />
+
               <Route path="/cart" component={Cart} />
               <Route path="/checkout" component={Checkout} />
               <Route path="/order-confirmation" component={OrderConfirmation} />
@@ -51,6 +56,8 @@ export default function App() {
               <Route path="/about" component={About} />
               <Route path="/artisan-spotlight" component={ArtisanSpotlight} />
               <Route path="/return-policy" component={ReturnPolicy} />
+
+              {/* Keep fallback LAST */}
               <Route component={NotFound} />
             </Switch>
           </main>
