@@ -9,26 +9,25 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@shared/schema";
 
 const BASE = import.meta.env.BASE_URL; // "/Khaista-Boutique/"
-const withBase = (p: string) =>
-  /^https?:\/\//i.test(p) || p.startsWith("/") ? p : BASE + p.replace(/^\/+/, "");
 
 async function fetchAllProducts(): Promise<ProductForCard[]> {
-  const res = await fetch(BASE + "api/products.json"); // static JSON
+  const res = await fetch(BASE + "api/products.json"); // static JSON served from client/public/api/products.json
   if (!res.ok) throw new Error(`Failed to load products.json (${res.status})`);
+
   const data = (await res.json()) as (Product & {
     image?: string;
     imageUrl?: string;
     imageAlt?: string | null;
   })[];
 
+  // IMPORTANT: return raw image path; ProductCard.assetUrl() will prefix BASE correctly
   return data.map((p) => {
-    const src = p.image ?? p.imageUrl!;      // pick a source (JSON has imageUrl)
-    const img = withBase(src);
+    const src = p.image ?? p.imageUrl ?? "";
     return {
       ...p,
-      image: img,
-      imageUrl: img,                         // ensure REQUIRED string for ProductForCard
-      imageAlt: p.imageAlt ?? undefined,     // null -> undefined
+      image: src || undefined,
+      imageUrl: src || "",            // raw; may be "assets/...", "/assets/..." or "https://..."
+      imageAlt: p.imageAlt ?? undefined,
     } as ProductForCard;
   });
 }
