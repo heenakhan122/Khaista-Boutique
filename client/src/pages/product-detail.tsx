@@ -13,11 +13,12 @@ import type { Product } from "@shared/schema";
 import { assetUrl } from "@/lib/asset-url";
 
 const BASE = import.meta.env.BASE_URL;
-const CATALOG_URL = BASE + "api/products.json?v=3";
+const CATALOG_VERSION = 3;
+const CATALOG_URL = `${BASE}api/products.json?v=${CATALOG_VERSION}`;
 
 // ------- fetch product from static JSON (works on GitHub Pages) -------
 async function fetchProductById(id: string): Promise<Product | null> {
-  const res = await fetch(BASE + "api/products.json");
+  const res = await fetch(CATALOG_URL, { cache: "no-store" });
   if (!res.ok) return null;
 
   const items = (await res.json()) as Array<
@@ -27,7 +28,6 @@ async function fetchProductById(id: string): Promise<Product | null> {
   const found = items.find((p) => String((p as any).id) === String(id));
   if (!found) return null;
 
-  // normalize fields expected by the UI
   return {
     ...found,
     imageUrl: found.image ?? found.imageUrl ?? "",
@@ -118,7 +118,7 @@ export default function ProductDetail() {
   const { toast } = useToast();
 
   const { data: product, isLoading } = useQuery<Product | null>({
-    queryKey: ["product", id],
+    queryKey: ["product", id, CATALOG_VERSION],       // include version to bust caches
     enabled: !!id,
     queryFn: () => fetchProductById(id!),
   });
@@ -253,7 +253,7 @@ export default function ProductDetail() {
             </CardContent>
           </Card>
 
-          {/* (Optional) shipping badges row – keep if you had it */}
+          {/* Shipping badges (optional) */}
           <Card>
             <CardContent className="pt-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -275,7 +275,7 @@ export default function ProductDetail() {
                   <RefreshCcw className="h-5 w-5 text-khaista-turquoise" />
                   <div>
                     <div className="font-medium text-sm">Free Exchanges</div>
-                    <div className="text-xs text-gray-600">& Alterations</div>
+                    <div className="text-xs text-gray-600">&amp; Alterations</div>
                   </div>
                 </div>
               </div>

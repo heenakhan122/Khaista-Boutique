@@ -8,11 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@shared/schema";
 
-const BASE = import.meta.env.BASE_URL; // "/Khaista-Boutique/"
-const CATALOG_URL = BASE + "api/products.json?v=3"; // bump number when you change the file
+const BASE = import.meta.env.BASE_URL;                 // "/Khaista-Boutique/"
+const CATALOG_VERSION = 3;                              // bump when products.json changes
+const CATALOG_URL = `${BASE}api/products.json?v=${CATALOG_VERSION}`;
 
 async function fetchAllProducts(): Promise<ProductForCard[]> {
-  const res = await fetch(BASE + "api/products.json"); // static JSON served from client/public/api/products.json
+  const res = await fetch(CATALOG_URL, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to load products.json (${res.status})`);
 
   const data = (await res.json()) as (Product & {
@@ -27,7 +28,7 @@ async function fetchAllProducts(): Promise<ProductForCard[]> {
     return {
       ...p,
       image: src || undefined,
-      imageUrl: src || "",            // raw; may be "assets/...", "/assets/..." or "https://..."
+      imageUrl: src || "",
       imageAlt: p.imageAlt ?? undefined,
     } as ProductForCard;
   });
@@ -38,15 +39,16 @@ export default function Products() {
   const [selectedCategory, setSelectedCategory] = useState<string>(params?.category || "all");
 
   const { data: allProducts = [], isLoading } = useQuery<ProductForCard[]>({
-    queryKey: ["products"],
+    queryKey: ["products", CATALOG_VERSION],          // include version to bust caches
     queryFn: fetchAllProducts,
   });
 
   const products = useMemo(() => {
-  if (selectedCategory === "all") return allProducts;
-  const wanted = selectedCategory === "dresses" ? "clothing" : selectedCategory;
-  return allProducts.filter((p) => p.category?.toLowerCase() === wanted);
-}, [allProducts, selectedCategory]);
+    if (selectedCategory === "all") return allProducts;
+    // The UI chip says "dresses" but product.category uses "clothing"
+    const wanted = selectedCategory === "dresses" ? "clothing" : selectedCategory;
+    return allProducts.filter((p) => p.category?.toLowerCase() === wanted);
+  }, [allProducts, selectedCategory]);
 
   const categories = [
     { value: "all", label: "All Products" },
