@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useRoute } from "wouter";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import ProductCard, { type ProductForCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,21 +8,18 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@shared/schema";
 
-const BASE = import.meta.env.BASE_URL;                 // "/Khaista-Boutique/"
-const CATALOG_VERSION = 3;                              // bump when products.json changes
+const BASE = import.meta.env.BASE_URL;
+const CATALOG_VERSION = 3;
 const CATALOG_URL = `${BASE}api/products.json?v=${CATALOG_VERSION}`;
 
 async function fetchAllProducts(): Promise<ProductForCard[]> {
   const res = await fetch(CATALOG_URL, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to load products.json (${res.status})`);
-
   const data = (await res.json()) as (Product & {
     image?: string;
     imageUrl?: string;
     imageAlt?: string | null;
   })[];
-
-  // IMPORTANT: return raw image path; ProductCard.assetUrl() will prefix BASE correctly
   return data.map((p) => {
     const src = p.image ?? p.imageUrl ?? "";
     return {
@@ -34,18 +31,25 @@ async function fetchAllProducts(): Promise<ProductForCard[]> {
   });
 }
 
+// Map route "clothing" -> UI category "dresses" (but filter by "clothing")
+const normalizeForUI = (raw: string) =>
+  raw === "clothing" ? "dresses" : raw;
+
 export default function Products() {
   const [, params] = useRoute("/products/:category");
-  const [selectedCategory, setSelectedCategory] = useState<string>(params?.category || "all");
+  const rawParam = (params?.category ?? "all").toLowerCase();
+  const uiFromRoute = normalizeForUI(rawParam);
+
+  const [selectedCategory, setSelectedCategory] = useState<string>(uiFromRoute);
+  useEffect(() => setSelectedCategory(uiFromRoute), [uiFromRoute]);
 
   const { data: allProducts = [], isLoading } = useQuery<ProductForCard[]>({
-    queryKey: ["products", CATALOG_VERSION],          // include version to bust caches
+    queryKey: ["products", CATALOG_VERSION],
     queryFn: fetchAllProducts,
   });
 
   const products = useMemo(() => {
     if (selectedCategory === "all") return allProducts;
-    // The UI chip says "dresses" but product.category uses "clothing"
     const wanted = selectedCategory === "dresses" ? "clothing" : selectedCategory;
     return allProducts.filter((p) => p.category?.toLowerCase() === wanted);
   }, [allProducts, selectedCategory]);
@@ -53,7 +57,7 @@ export default function Products() {
   const categories = [
     { value: "all", label: "All Products" },
     { value: "jewelry", label: "Jewelry" },
-    { value: "dresses", label: "Dresses" },
+    { value: "dresses", label: "Dresses" }, // UI label
     { value: "bags", label: "Bags" },
   ] as const;
 
@@ -63,23 +67,24 @@ export default function Products() {
       description: "Discover our complete collection of authentic Afghan handcrafted items",
     },
     jewelry: {
-      title: "Traditional Jewelry",
+      title: "Afghan Jewelry Collection",
       description:
-        "Exquisite handcrafted jewelry featuring traditional Afghan designs with silver work and natural stones",
+        "Discover our exquisite collection of traditional Afghan jewelry, handcrafted by skilled artisans using techniques passed down through generations.",
     },
     dresses: {
       title: "Traditional Dresses",
       description:
-        "Stunning Kochi and Pashtun dresses with intricate embroidery and authentic patterns",
+        "Stunning Kochi and Pashtun dresses with intricate embroidery and authentic patterns.",
     },
     bags: {
       title: "Handwoven Bags",
       description:
-        "Colorful traditional bags featuring vintage patterns and vibrant embroidered designs",
+        "Colorful traditional bags featuring vintage patterns and vibrant embroidered designs.",
     },
   } as const;
 
-  const currentInfo = categoryInfo[(selectedCategory as keyof typeof categoryInfo) || "all"];
+  const currentInfo =
+    categoryInfo[(selectedCategory as keyof typeof categoryInfo)] ?? categoryInfo.all;
 
   return (
     <div className="min-h-screen bg-gray-50">
