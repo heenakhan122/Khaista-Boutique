@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useCartStore } from "@/lib/cart-store";
 import { WishlistButton } from "@/components/wishlist-button";
 import type { Product } from "@shared/schema";
+import { assetUrl } from "@/lib/asset-url";
 
 /** Looser shape the card can accept from pages */
 export type ProductForCard = Omit<Product, "imageAlt"> & {
@@ -43,8 +44,13 @@ export default function ProductCard({ product }: ProductCardProps) {
     addItem(canonical);
   };
 
-  const imgSrc = toSrc(product.image ?? product.imageUrl);
-
+  const imgSrc = assetUrl(product.image ?? product.imageUrl);
+  <img
+  src={imgSrc}
+  alt={canonical.imageAlt ?? canonical.name}
+  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+  loading="lazy"
+/>
   return (
     <Link href={`/product/${product.id}`}>
       <Card className="group cursor-pointer border-0 shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">

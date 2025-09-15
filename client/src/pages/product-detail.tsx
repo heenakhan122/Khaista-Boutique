@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRoute, Link } from "wouter";
-import { useState } from "react";
 import { ArrowLeft, ShoppingBag, Star, Truck, Shield, RefreshCcw, Ruler } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,14 +10,81 @@ import { useCartStore } from "@/lib/cart-store";
 import { useToast } from "@/hooks/use-toast";
 import { WishlistButton } from "@/components/wishlist-button";
 import type { Product } from "@shared/schema";
+import { assetUrl } from "@/lib/asset-url";
 
-// helpers (unchanged) ...
-const getSuggestedMaterials = (category: string) => { /* ...exactly as you had... */ };
-const getCareInstructions = (category: string) => { /* ... */ };
-const getSizeGuide = (category: string) => { /* ... */ };
+// ---- helpers (real bodies) ----
+const getSuggestedMaterials = (category: string) => {
+  switch (category) {
+    case "jewelry":
+      return "Traditional Afghan silver, brass, coral beads, turquoise stones, glass beads";
+    case "clothing":
+      return "Premium cotton, silk, traditional Afghan embroidery thread, metallic accents";
+    case "bags":
+      return "Durable canvas, traditional Afghan textiles, leather accents, metal hardware";
+    default:
+      return "High-quality traditional Afghan materials";
+  }
+};
 
+const getCareInstructions = (category: string) => {
+  switch (category) {
+    case "jewelry":
+      return "Store in a dry place away from moisture. Clean gently with a soft cloth. Avoid exposure to perfumes and chemicals.";
+    case "clothing":
+      return "Hand wash in cold water with mild detergent. Air dry away from direct sunlight. Iron on low heat if needed.";
+    case "bags":
+      return "Spot clean with damp cloth. Allow to air dry completely. Store in a cool, dry place when not in use.";
+    default:
+      return "Handle with care. Clean gently and store properly to maintain quality.";
+  }
+};
+
+const getSizeGuide = (category: string) => {
+  switch (category) {
+    case "jewelry":
+      return (
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div><strong>Necklaces:</strong></div><div>Adjustable length 16-20 inches</div>
+            <div><strong>Bracelets:</strong></div><div>Adjustable 6.5-8.5 inches</div>
+            <div><strong>Earrings:</strong></div><div>Drop length varies by design</div>
+          </div>
+          <p className="text-xs text-gray-600 mt-2">Most jewelry pieces are adjustable. Contact us for custom sizing.</p>
+        </div>
+      );
+    case "clothing":
+      return (
+        <div className="space-y-3">
+          <div className="grid grid-cols-3 gap-2 text-sm border-b pb-2">
+            <div><strong>Size</strong></div><div><strong>Chest (in)</strong></div><div><strong>Length (in)</strong></div>
+          </div>
+          <div className="grid grid-cols-3 gap-2 text-sm"><div>Small</div><div>34-36</div><div>42-44</div></div>
+          <div className="grid grid-cols-3 gap-2 text-sm"><div>Medium</div><div>38-40</div><div>44-46</div></div>
+          <div className="grid grid-cols-3 gap-2 text-sm"><div>Large</div><div>42-44</div><div>46-48</div></div>
+          <div className="grid grid-cols-3 gap-2 text-sm"><div>X-Large</div><div>46-48</div><div>48-50</div></div>
+          <p className="text-xs text-gray-600 mt-2">Traditional Afghan dresses are designed to fit loosely. Custom sizing available through Khaista Tailors.</p>
+        </div>
+      );
+    case "bags":
+      return (
+        <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div><strong>Small bags:</strong></div><div>8" x 6" x 3"</div>
+            <div><strong>Medium bags:</strong></div><div>12" x 9" x 4"</div>
+            <div><strong>Large bags:</strong></div><div>16" x 12" x 5"</div>
+            <div><strong>Tote bags:</strong></div><div>18" x 14" x 6"</div>
+          </div>
+          <p className="text-xs text-gray-600 mt-2">Measurements are approximate. Each handmade piece may vary slightly.</p>
+        </div>
+      );
+    default:
+      return <p className="text-sm text-gray-600">Size information varies by product. Contact us for specific measurements.</p>;
+  }
+};
+
+// ---- component ----
 export default function ProductDetail() {
-  // Accept both /product/:id and /products/:id (and trailing slash, handled by App routes)
+  // Accept both /product/:id and /products/:id
   const [m1, p1] = useRoute("/product/:id");
   const [m2, p2] = useRoute("/products/:id");
   const match = m1 || m2;
@@ -84,7 +150,11 @@ export default function ProductDetail() {
         {/* Image */}
         <div className="max-w-2xl mx-auto mb-8">
           <div className="aspect-square rounded-lg overflow-hidden bg-white shadow-sm">
-            <img src={product.imageUrl} alt={product.imageAlt || product.name} className="w-full h-full object-cover" />
+            <img
+              src={assetUrl(product.imageUrl)}
+              alt={product.imageAlt || product.name}
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
 
@@ -125,7 +195,37 @@ export default function ProductDetail() {
             </div>
           </div>
 
-          {/* ...rest unchanged... */}
+          {/* Product Details / Size Guide / Policy (you can keep your original blocks here) */}
+          <Card>
+            <CardHeader><CardTitle className="text-lg font-serif">Product Details</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <div><h4 className="font-medium text-gray-900">Materials</h4><p className="text-gray-600">{product.materials || getSuggestedMaterials(product.category)}</p></div>
+              {product.dimensions && (<div><h4 className="font-medium text-gray-900">Dimensions</h4><p className="text-gray-600">{product.dimensions}</p></div>)}
+              <div><h4 className="font-medium text-gray-900">Care Instructions</h4><p className="text-gray-600">{product.careInstructions || getCareInstructions(product.category)}</p></div>
+              <div><h4 className="font-medium text-gray-900">Origin</h4><p className="text-gray-600">Handcrafted in Afghanistan by skilled female artisans</p></div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader><CardTitle className="text-lg font-serif flex items-center gap-2"><Ruler className="h-5 w-5" /> Size Guide</CardTitle></CardHeader>
+            <CardContent>{getSizeGuide(product.category)}</CardContent>
+          </Card>
+
+          <Card className="border-khaista-soft-pink bg-khaista-cream/50">
+            <CardHeader><CardTitle className="text-lg font-serif flex items-center gap-2"><RefreshCcw className="h-5 w-5" /> Return & Exchange Policy</CardTitle></CardHeader>
+            <CardContent className="space-y-3">
+              <div className="bg-white p-4 rounded-lg border border-khaista-pink/20">
+                <h4 className="font-semibold text-khaista-charcoal mb-2">All Sales Final - No Returns</h4>
+                <p className="text-sm text-gray-600 mb-3">Due to the handmade nature of our products and support for our Afghan artisans, we do not accept returns.</p>
+                <h4 className="font-semibold text-khaista-pink mb-2">Free Exchanges & Alterations</h4>
+                <p className="text-sm text-gray-600">We offer <strong>free exchanges</strong> and <strong>free alterations</strong> within 30 days.</p>
+              </div>
+              <div className="text-xs text-gray-600">
+                <p>• Exchanges available for different sizes or colors (subject to availability)</p>
+                <p>• Free alterations through our Khaista Tailors network</p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
