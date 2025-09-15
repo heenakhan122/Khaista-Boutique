@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import type { Product } from "@shared/schema";
 
 const BASE = import.meta.env.BASE_URL; // "/Khaista-Boutique/"
+const CATALOG_URL = BASE + "api/products.json?v=3"; // bump number when you change the file
 
 async function fetchAllProducts(): Promise<ProductForCard[]> {
   const res = await fetch(BASE + "api/products.json"); // static JSON served from client/public/api/products.json
@@ -42,9 +43,10 @@ export default function Products() {
   });
 
   const products = useMemo(() => {
-    if (selectedCategory === "all") return allProducts;
-    return allProducts.filter((p) => p.category?.toLowerCase() === selectedCategory);
-  }, [allProducts, selectedCategory]);
+  if (selectedCategory === "all") return allProducts;
+  const wanted = selectedCategory === "dresses" ? "clothing" : selectedCategory;
+  return allProducts.filter((p) => p.category?.toLowerCase() === wanted);
+}, [allProducts, selectedCategory]);
 
   const categories = [
     { value: "all", label: "All Products" },

@@ -13,6 +13,7 @@ import type { Product } from "@shared/schema";
 import { assetUrl } from "@/lib/asset-url";
 
 const BASE = import.meta.env.BASE_URL;
+const CATALOG_URL = BASE + "api/products.json?v=3";
 
 // ------- fetch product from static JSON (works on GitHub Pages) -------
 async function fetchProductById(id: string): Promise<Product | null> {
