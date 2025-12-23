@@ -1,0 +1,207 @@
+[
+  {
+    "id": "afghan-choker-necklace",
+    "name": "Afghan Choker Necklace",
+    "description": "Traditional handcrafted choker necklace with vintage Afghan design.",
+    "price": 89.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista_Afghan_Choker_Necklace_1754949895057.jpg",
+    "imageAlt": "Afghan Choker Necklace",
+    "inStock": 8,
+    "materials": "Silver tone metal, glass beads"
+  },
+  {
+    "id": "afghan-coin-necklace",
+    "name": "Afghan Coin Necklace",
+    "description": "Authentic Afghan coin necklace with traditional motifs.",
+    "price": 129.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista_Afghan_Coin_Necklace_1754949895058.webp",
+    "imageAlt": "Afghan Coin Necklace",
+    "inStock": 7,
+    "materials": "Metal alloy, coins, beadwork"
+  },
+  {
+    "id": "afghan-crescent-necklace",
+    "name": "Afghan Crescent Necklace",
+    "description": "Beautiful crescent moon design with traditional bead accents.",
+    "price": 99.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista_Afghan_Crescent_Necklace_1754949895062.webp",
+    "imageAlt": "Afghan Crescent Necklace",
+    "inStock": 10,
+    "materials": "Metal alloy, glass beads"
+  },
+  {
+    "id": "afghan-green-set",
+    "name": "Green Afghan Jewelry Set",
+    "description": "Necklace and matching earrings in vibrant green stones.",
+    "price": 149.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista_Afghan_Green_set_1754949895063.jpg",
+    "imageAlt": "Green Afghan Jewelry Set",
+    "inStock": 5,
+    "materials": "Brass, green stones, beadwork"
+  },
+  {
+    "id": "firoza-jewelry-set",
+    "name": "Firoza Afghan Jewelry Set",
+    "description": "Turquoise-inspired traditional jewelry set.",
+    "price": 139.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista_afghan_jewlery_set_firoza_1754949895063.jpg",
+    "imageAlt": "Firoza Afghan Jewelry Set",
+    "inStock": 6,
+    "materials": "Metal alloy, turquoise glass beads"
+  },
+  {
+    "id": "multicolored-necklace",
+    "name": "Multicolored Afghan Necklace",
+    "description": "Vibrant traditional necklace with colorful beads.",
+    "price": 109.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista_multicolored_necklace_1755032917521.webp",
+    "imageAlt": "Multicolored Afghan Necklace",
+    "inStock": 9,
+    "materials": "Mixed beads, alloy"
+  },
+  {
+    "id": "pink-jewelry-set",
+    "name": "Pink Afghan Jewelry Set",
+    "description": "Elegant Afghan set in soft pink tones.",
+    "price": 119.99,
+    "category": "jewelry",
+    "imageUrl": "assets/Khaista_pink_jewlery_1754950593555.webp",
+    "imageAlt": "Pink Afghan Jewelry Set",
+    "inStock": 7,
+    "materials": "Beads, alloy"
+  },
+
+  {
+    "id": "blue-silver-kochi-dress",
+    "name": "Blue & Silver Kochi Dress",
+    "description": "Classic Kochi dress with detailed silver embroidery.",
+    "price": 279.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista_blue_and_silver_kochi_dress_1754949895064.jpg",
+    "imageAlt": "Blue and Silver Kochi Dress",
+    "inStock": 3,
+    "dimensions": "See size guide",
+    "materials": "Cotton, silk thread"
+  },
+  {
+    "id": "green-red-kochi-dress",
+    "name": "Green & Red Kochi Dress",
+    "description": "Vibrant traditional dress with rich red and green patterns.",
+    "price": 299.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista_Green_and_Red_Kochi_Dress_1754949895065.jpg",
+    "imageAlt": "Green and Red Kochi Dress",
+    "inStock": 4,
+    "materials": "Cotton blend, embroidery"
+  },
+  {
+    "id": "orange-kochi-dress",
+    "name": "Orange Kochi Dress",
+    "description": "Bright, festive Kochi dress with traditional embroidery.",
+    "price": 289.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista_orange_kochi_dress_1754950593554.jpg",
+    "imageAlt": "Orange Kochi Dress",
+    "inStock": 2,
+    "materials": "Cotton, silk thread"
+  },
+  {
+    "id": "red-blue-dress",
+    "name": "Red & Blue Dress",
+    "description": "Striking red and blue palette with detailed stitching.",
+    "price": 289.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista_red_and_blue_dress_1754950593555.jpg",
+    "imageAlt": "Red and Blue Dress",
+    "inStock": 3
+  },
+  {
+    "id": "pink-gold-kochi-dress",
+    "name": "Pink & Gold Kochi Dress",
+    "description": "Delicate pink dress with gold accents and embroidery.",
+    "price": 309.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista_pink_and_gold_kochi_dress_1755023867413.jpg",
+    "imageAlt": "Pink and Gold Kochi Dress",
+    "inStock": 2
+  },
+  {
+    "id": "kochi-dress-classic",
+    "name": "Classic Kochi Dress",
+    "description": "Traditional silhouette with timeless patterns.",
+    "price": 269.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista_Kochi_Dress__1754950593553.jpg",
+    "imageAlt": "Classic Kochi Dress",
+    "inStock": 3
+  },
+  {
+    "id": "tailored-dress-1",
+    "name": "Tailored Dress - Style 1",
+    "description": "Custom-tailored Afghan dress with modern fit.",
+    "price": 329.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista_Tailored_dress_1_1755026603721.jpeg",
+    "imageAlt": "Tailored Dress Style 1",
+    "inStock": 2
+  },
+  {
+    "id": "tailored-dress-2",
+    "name": "Tailored Dress - Style 2",
+    "description": "Hand-tailored dress with intricate embroidery.",
+    "price": 329.99,
+    "category": "clothing",
+    "imageUrl": "assets/tailored_dress_2_1755026617597.webp",
+    "imageAlt": "Tailored Dress Style 2",
+    "inStock": 2
+  },
+  {
+    "id": "mens-afghan-vest",
+    "name": "Men's Afghan Vest",
+    "description": "Traditional men's vest with classic patterns.",
+    "price": 129.99,
+    "category": "clothing",
+    "imageUrl": "assets/Khaista_men's_afghan_vest_1755023707395.jpg",
+    "imageAlt": "Men's Afghan Vest",
+    "inStock": 6
+  },
+
+  {
+    "id": "afghan-tote-bag",
+    "name": "Afghan Tote Bag",
+    "description": "Roomy tote with traditional Afghan textile panel.",
+    "price": 79.99,
+    "category": "bags",
+    "imageUrl": "assets/Khaista_Afghan_tote_bag_1755023655517.jpg",
+    "imageAlt": "Afghan Tote Bag",
+    "inStock": 10,
+    "dimensions": "18\" x 14\" x 6\""
+  },
+  {
+    "id": "vintage-pashtun-bag",
+    "name": "Vintage Pashtun Bag",
+    "description": "Handcrafted vintage-style Pashtun shoulder bag.",
+    "price": 99.99,
+    "category": "bags",
+    "imageUrl": "assets/Khaista_Afghan_vintage_pashtun_bag_1754949895064.webp",
+    "imageAlt": "Vintage Pashtun Bag",
+    "inStock": 5,
+    "dimensions": "12\" x 9\" x 4\""
+  },
+  {
+    "id": "handmade-bag-still",
+    "name": "Handmade Afghan Bag",
+    "description": "Durable handmade bag with traditional pattern.",
+    "price": 89.99,
+    "category": "bags",
+    "imageUrl": "assets/Khaista_handmade_bag_afghan_vid_1755025056936.avif",
+    "imageAlt": "Handmade Afghan Bag",
+    "inStock": 7
+  }
+]

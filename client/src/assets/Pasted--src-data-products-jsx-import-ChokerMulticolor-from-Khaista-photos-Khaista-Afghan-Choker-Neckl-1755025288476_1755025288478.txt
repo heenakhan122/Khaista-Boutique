@@ -1,0 +1,143 @@
+// src/data/products.jsx
+import ChokerMulticolor from "../Khaista photos/Khaista Afghan Choker Necklace.jpg";
+import CoinSilverNecklace from "../Khaista photos/Khaista Afghan Coin Necklace.webp";
+import CrescentMulticolorNecklace from "../Khaista photos/Khaista Afghan Crescent Necklace.webp";
+import GreenChokerEarringSet from "../Khaista photos/Khaista Afghan Green set.jpg";
+import AfghanFirozaSet from "../Khaista photos/Khaista afghan jewlery set firoza.jpg";
+import AfghanToteBag from "../Khaista photos/Khaista Afghan tote bag.jpg";
+import VintagePashtunBag from "../Khaista photos/Khaista Afghan vintage pashtun bag.webp";
+import BeadHandbag from "../Khaista photos/Khaista blue and silver kochi dress.jpg";
+import GreenRedKochiDress from "../Khaista photos/Khaista Green and Red Kochi Dress.jpg";
+import WeddingKochiDress from "../Khaista photos/Khaista Kochi Dress.webp";
+import OrangeKochiDress from "../Khaista photos/Khaista orange kochi dress.jpg";
+import PinkGoldKochiDress from "../Khaista photos/Khaista pink and gold kochi dress.jpg";
+import RedBlueDress from "../Khaista photos/Khaista red and blue dress.jpg";
+import MenKochiVest from "../Khaista photos/Khaista men's afghan vest.jpg";
+import MulticolorNecklace from "../Khaista photos/Khaista Multicolored jewlery.webp";
+import MulticolorNecklaceSilver from "../Khaista photos/Khaista multicolored necklace.webp";
+import KhaistaBoutiqueLogo from "../Khaista photos/Khaista Boutique Logo.jpg"
+
+const products = [
+  {
+    id: 1,
+    name: "Afghan MultiColor Choker Necklace",
+    image: ChokerMulticolor,
+    price: "$45",
+    category: "Jewelry",
+  },
+  {
+    id: 2,
+    name: "Afghan Silver Coin Necklace",
+    image: CoinSilverNecklace,
+    price: "$55",
+    category: "Jewelry",
+  },
+  {
+    id: 3,
+    name: "Afghan Multicolor Crescent Necklace",
+    image: CrescentMulticolorNecklace,
+    price: "$45",
+    category: "Jewelry",
+  },
+  {
+    id: 4,
+    name: "Green Choker and Earring Set",
+    image: GreenChokerEarringSet,
+    price: "$70",
+    category: "Jewelry",
+  },
+  {
+    id: 5,
+    name: "Afghan Firoza Full Set",
+    image: AfghanFirozaSet,
+    price: "$100",
+    category: "Jewelry",
+  },
+  {
+    id: 6,
+    name: "Afghan Tote Bag",
+    image: AfghanToteBag,
+    price: "$45",
+    category: "Bags",
+  },
+  {
+    id: 7,
+    name: "Afghan Vintage Pashtun Bag",
+    image: VintagePashtunBag,
+    price: "$35",
+    category: "Bags",
+  },
+  {
+    id: 8,
+    name: "Afghan Bead Handbag",
+    image: BeadHandbag,
+    price: "$45",
+    category: "Bags",
+  },
+  {
+    id: 9,
+    name: "Silver and Blue Kochi Dress",
+    image: BeadHandbag,
+    price: "$150",
+    category: "Clothing",
+  },
+  {
+    id: 10,
+    name: "Green and Pink Kochi Dress",
+    image: GreenRedKochiDress,
+    price: "$150",
+    category: "Clothing",
+  },
+  {
+    id: 11,
+    name: "Multicolored Wedding Kochi Dress",
+    image: WeddingKochiDress,
+    price: "$350",
+    category: "Clothing",
+  },
+  {
+    id: 12,
+    name: "Orange Kochi Dress",
+    image: OrangeKochiDress,
+    price: "$150",
+    category: "Clothing",
+  },
+  {
+    id: 13,
+    name: "Pink and Gold Kochi Dress",
+    image: PinkGoldKochiDress,
+    price: "$200",
+    category: "Clothing",
+  },
+  {
+    id: 14,
+    name: "Afghan Red and Blue Dress",
+    image: RedBlueDress,
+    price: "$150",
+    category: "Clothing",
+  },
+  {
+    id: 15,
+    name: "Men Kochi Vest",
+    image: MenKochiVest,
+    price: "$75",
+    category: "Clothing",
+  },
+  {
+    id: 16,
+    name: "Afghan Traditional Multicolor Necklace",
+    image: MulticolorNecklace,
+    price: "$100",
+    category: "Jewelry",
+  },
+  {
+    id: 17,
+    name: "Afghan Traditional Multicolor Necklace Silver",
+    image: MulticolorNecklaceSilver,
+    price: "$100",
+    category: "Jewelry",
+  },
+
+];
+
+export default products;
